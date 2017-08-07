@@ -22,8 +22,6 @@ class CanalController extends \AdminController
         ];
     }
     
-    
-    
     public function editAction(){
         if(!$this->user->login)
             return $this->show404();
@@ -82,7 +80,7 @@ class CanalController extends \AdminController
         if(!$q)
             return $this->ajax(['error'=>true, 'data'=>[]]);
         
-        $canals = PCanal::get(['q'=>$q], 10);
+        $canals = PCanal::get(['q'=>$q], 10, false, 'LENGTH(name) ASC');
         if(!$canals)
             return $this->ajax(['error'=>false, 'data'=>[]]);
         
