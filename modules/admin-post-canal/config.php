@@ -16,7 +16,8 @@ return [
     ],
     '__dependencies' => [
         'admin',
-        'post-canal'
+        'post-canal',
+        '/slug-history'
     ],
     '_services' => [],
     '_autoload' => [

@@ -42,7 +42,7 @@ class CanalController extends \AdminController
             $object = PCanal::get($id, false);
             if(!$object)
                 return $this->show404();
-            $old = $object;
+            $old = clone $object;
         }else{
             $object = new \stdClass();
             $object->user = $this->user->id;
@@ -63,6 +63,10 @@ class CanalController extends \AdminController
             $object->updated = null;
             if(false === PCanal::set($object, $id))
                 throw new \Exception(PCanal::lastError());
+            
+            // save slug changes
+            if(isset($object->slug) && $object->slug != $old->slug && module_exists('slug-history'))
+                $this->slug->create('post-canal', $id, $old->slug, $object->slug);
         }
         
         $this->fire('post-canal:'. $event, $object, $old);
